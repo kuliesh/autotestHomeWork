@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.8.0"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'io.qameta.allure'
+
+group = 'netukr.mail.auto'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+
+    implementation group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation("io.github.bonigarcia:webdrivermanager:3.7.1")
+    implementation('net.lightbody.bmp:browsermob-core:2.1.5')
+            { exclude module: 'selenium' }
+    // https://mvnrepository.com/artifact/org.testng/testng
+    testCompile group: 'org.testng', name: 'testng', version: '7.1.0'
+    // https://mvnrepository.com/artifact/log4j/log4j
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+
+    implementation group: 'com.tngtech.java', name: 'junit-dataprovider', version: '1.12.0'
+
+    implementation 'com.codeborne:selenide:5.7.0'
+    implementation 'io.cucumber:cucumber-java:4.4.0'
+
+    implementation 'com.github.appium:java-client:7.2.0'
+    compile 'io.qameta.allure:allure-assertj:2.13.1'
+    implementation group: 'ru.qatools.commons', name: 'properties', version: '2.0.RC6'
+
+}
+
+allure {
+    version = '2.2.1'
+    autoconfigure = true
+    aspectjweaver = true
+    allureJavaVersion = '2.13.0'
+}
+
+test {
+    useJUnit()
+    systemProperties System.properties
+    // maxParallelForks = 4
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
