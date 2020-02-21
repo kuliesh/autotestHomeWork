@@ -45,7 +45,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
         logger.info("Login to account");
         open(AccountsURL); //відкриваємо сторінку входу до поштової скриньки
         $(byId("id-l")).sendKeys("asdqwez");
-        $(byId("id-p")).sendKeys(",fhvfktq4");
+        $(byId("id-p")).sendKeys("");
         $(".form__submit").click();
         Thread.sleep(2000);
         //ПОСТАВИТИ ОЧІКУВАННЯ
