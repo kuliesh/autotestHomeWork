@@ -5,7 +5,6 @@ public class TitleCss {
     private String fontSize;
     private String fontWeight;
     private String lineHeight;
-
     private String fontFamily;
 
     public String getColor() {
