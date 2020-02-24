@@ -1,10 +1,10 @@
 package netukr.mail.auto.helpers;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,8 @@ public class ApachePOIreadHelper {
     private String getCellData(int rowNum, int colNum) {
         logger.info("rowNum = " + rowNum + ", colNum = " + colNum);
         cell = excelWSheet.getRow(rowNum).getCell(colNum);
-        return cell.getStringCellValue();
+        DataFormatter formatter = new DataFormatter();
+        return formatter.formatCellValue(cell);
     }
 
     private List[] getRowData(int rowNo) {
@@ -79,3 +80,4 @@ public class ApachePOIreadHelper {
         return tabArray;
     }
 }
+

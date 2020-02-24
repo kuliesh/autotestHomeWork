@@ -1,5 +1,6 @@
 package netukr.mail.auto.SetSecurityClassesTests;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
@@ -37,10 +38,10 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         open(AccountsURL); //відкриваємо сторінку входу до поштової скриньки
         $(byId("id-l")).sendKeys("asdqwez");
         $(byId("id-p")).sendKeys("");
-        $(".form__submit").click();
+        $(".form__submit").waitUntil(Condition.visible, 4000).click();
         //ПОСТАВИТИ ОЧІКУВАННЯ
-        Thread.sleep(time);
-        //turnToUA(); //перемикаємося на українську розклдаку
+        waitTest();
+        turnToUA(); //перемикаємося на українську розклдаку
     }
 
     //метод активації для кнопки Налаштуванн&Безпека
@@ -53,6 +54,9 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         $(".login-button").scrollIntoView(true);
     }
 
+    void waitTest() {
+        $(".sidebar__foot").waitUntil(Condition.visible, 4000);
+    }
     //ініціалізація csssecuritypage.properties
     //шлях до файлу
     URL csssecuritypage = ReaderFilesFromResources.getUrlFromResources ("csssecuritypage.properties");
@@ -84,7 +88,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         //ПОСТАВИТИ ОЧИКУВАННЯ
 
         isRunFrame();
-        Thread.sleep(time);
+        waitTest();
 
         SoftAssert softAssertion = new SoftAssert();
 
@@ -147,7 +151,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         //ПОСТАВИТИ ОЧИКУВАННЯ
 
         isRunFrame();
-        Thread.sleep(time);
+        waitTest();
 
         SoftAssert softAssertion = new SoftAssert();
 
@@ -208,7 +212,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         //ПОСТАВИТИ ОЧИКУВАННЯ
 
         isRunFrame();
-        Thread.sleep(time);
+        waitTest();
 
         SoftAssert softAssertion = new SoftAssert();
 
@@ -290,7 +294,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         //ПОСТАВИТИ ОЧИКУВАННЯ
 
         isRunFrame();
-        Thread.sleep(time);
+        waitTest();
 
         SoftAssert softAssertion = new SoftAssert();
 
@@ -386,7 +390,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         String hrefPersonalData = "desktop#security/personalData";
 
         isRunFrame();
-        Thread.sleep(time);
+        waitTest();
 
         SoftAssert softAssertion = new SoftAssert();
 
@@ -463,7 +467,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         String hrefAppPasswords = "desktop#security/appPasswords";
 
         isRunFrame();
-        Thread.sleep(time);
+        waitTest();
 
         SoftAssert softAssertion = new SoftAssert();
 
@@ -536,7 +540,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         //ПОСТАВИТИ ОЧИКУВАННЯ
 
         isRunFrame();
-        Thread.sleep(time);
+        waitTest();
 
         SoftAssert softAssertion = new SoftAssert();
 
@@ -635,7 +639,7 @@ public class TestTransitionsSectionsSecurity<softAssertion> extends BaseTests {
         $(byId("id-privilege-password")).sendKeys(",fhvfktq4");
         $(".button_style-main.popup-confirm__button").click();
         //ПОСТАВИТИ ОЧІКУВАННЯ
-        Thread.sleep(time);
+        waitTest();
         isStopFrame();
     }
 }

@@ -1,14 +1,12 @@
 package netukr.mail.auto.SetSecurityClassesTests;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import io.qameta.allure.*;
 import netukr.mail.auto.BaseClassesForTests.BaseTests;
 import netukr.mail.auto.dto.*;
-import netukr.mail.auto.helpers.ApachePOIreadHelper;
-import netukr.mail.auto.helpers.ReaderFilesFromResources;
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -16,10 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.io.File;
-import java.lang.reflect.Method;
-import java.util.List;
-
 
 import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selenide.*;
@@ -46,10 +40,10 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
         open(AccountsURL); //відкриваємо сторінку входу до поштової скриньки
         $(byId("id-l")).sendKeys("asdqwez");
         $(byId("id-p")).sendKeys("");
-        $(".form__submit").click();
-        Thread.sleep(2000);
+        $(".form__submit").waitUntil(Condition.visible, 4000).click();
+        waitTest();
         //ПОСТАВИТИ ОЧІКУВАННЯ
-        //turnToUA(); //перемикаємося на українську розклдаку
+        turnToRU(); //перемикаємося на українську розклдаку
     }
 
     @BeforeClass
@@ -149,11 +143,12 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
     }
 
     void openTestPageUrl() {
+
         open(TestSetupURL + TestPageURL);
     }
 
-    void waitTest() throws InterruptedException {
-        Thread.sleep(2000);
+    void waitTest() {
+        $(".sidebar__foot").waitUntil(Condition.visible, 4000);
     }
 
     @Test //Перевірка для Української локалізації
@@ -165,8 +160,8 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
         String locatorTitleSecurityPage = ".app__title";
         openTestPageUrl();
         Configuration.reportsFolder = ScreenshotURL;
+        Thread.sleep(4000);
         $(".header").scrollIntoView(true);
-        waitTest();
 
         isRunFrame();
 
@@ -186,7 +181,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitle = propertiesPapameterCssTitle[i];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitle, $(locatorTitleSecurityPage).getCssValue(varNamePapametersCss),
-                    "\"" + varNamePapametersCss + " шрифта заголовку 'Безпека' в даній локалізації не відповідає документації " + varPropertiesPapametersCssTitle + ".");
+                    "'" + varNamePapametersCss + "' шрифта заголовку 'Безпека' в даній локалізації не відповідає документації " + varPropertiesPapametersCssTitle + ".");
         }
 
         softAssertion.assertAll();
@@ -227,7 +222,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitle = propertiesPapameterCssTitle[i];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitle, $(titleLocatorCss.getTitleOpenSession()).getCssValue(varNamePapametersCss),
-                    "\"" + varNamePapametersCss + " шрифта заголовку 'Відкриті сесії' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
+                    "'" + varNamePapametersCss + "' шрифта заголовку 'Відкриті сесії' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
         }
 
         String[] namePapametersCssDes = new String[]{"color", "font-size", "font-family", "margin"};
@@ -294,7 +289,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitleDes = propertiesPapameterCssTitleDes[j];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitleDes, $(descriptionLocatorCss.getDescriptionSecurityLog()).getCssValue(varNamePapametersCssDes),
-                    "\"" + varNamePapametersCssDes + " шрифта опису розділа 'Журнал безпеки' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
+                    "'" + varNamePapametersCssDes + "' шрифта опису розділа 'Журнал безпеки' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
         }
 
         softAssertion.assertAll();
@@ -335,7 +330,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitle = propertiesPapameterCssTitle[i];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitle, $(titleLocatorCss.getTitlePasswordChange()).getCssValue(varNamePapametersCss),
-                    "\"" + varNamePapametersCss + " шрифта заголовку 'Зміна пароля' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
+                    "'" + varNamePapametersCss + "' шрифта заголовку 'Зміна пароля' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
         }
 
         String[] namePapametersCssDes = new String[]{"color", "font-size", "font-family", "margin"};
@@ -348,7 +343,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitleDes = propertiesPapameterCssTitleDes[j];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitleDes, $(descriptionLocatorCss.getDescriptionPasswordChange()).getCssValue(varNamePapametersCssDes),
-                    "\"" + varNamePapametersCssDes + " шрифта опису розділа 'Зміна пароля' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
+                    "'" + varNamePapametersCssDes + "' шрифта опису розділа 'Зміна пароля' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
         }
 
         softAssertion.assertAll();
@@ -389,7 +384,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitle = propertiesPapameterCssTitle[i];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitle, $(titleLocatorCss.getTitleRecoveryContacts()).getCssValue(varNamePapametersCss),
-                    "\"" + varNamePapametersCss + " шрифта заголовку 'Контакти для відновлення' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
+                    "'" + varNamePapametersCss + "' шрифта заголовку 'Контакти для відновлення' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
         }
 
         String[] namePapametersCssDes = new String[]{"color", "font-size", "font-family", "margin"};
@@ -402,7 +397,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitleDes = propertiesPapameterCssTitleDes[j];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitleDes, $(descriptionLocatorCss.getDescriptionRecoveryContacts()).getCssValue(varNamePapametersCssDes),
-                    "\"" + varNamePapametersCssDes + " шрифта опису розділа 'Контакти для відновлення' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
+                    "'" + varNamePapametersCssDes + "' шрифта опису розділа 'Контакти для відновлення' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
         }
 
         softAssertion.assertAll();
@@ -443,7 +438,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitle = propertiesPapameterCssTitle[i];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitle, $(titleLocatorCss.getTitlePersonalInfo()).getCssValue(varNamePapametersCss),
-                    "\"" + varNamePapametersCss + " шрифта заголовку 'Особисті дані' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
+                    "'" + varNamePapametersCss + "' шрифта заголовку 'Особисті дані' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
         }
 
         String[] namePapametersCssDes = new String[]{"color", "font-size", "font-family", "margin"};
@@ -456,7 +451,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitleDes = propertiesPapameterCssTitleDes[j];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitleDes, $(descriptionLocatorCss.getDescriptionPersonalInfo()).getCssValue(varNamePapametersCssDes),
-                    "\"" + varNamePapametersCssDes + " шрифта опису розділа 'Особисті дані' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
+                    "'" + varNamePapametersCssDes + " шрифта опису розділа 'Особисті дані' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
         }
 
         softAssertion.assertAll();
@@ -497,7 +492,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitle = propertiesPapameterCssTitle[i];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitle, $(titleLocatorCss.getTitleAccountDeletion()).getCssValue(varNamePapametersCss),
-                    "\"" + varNamePapametersCss + " шрифта заголовку 'Видалення акаунта' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
+                    "'" + varNamePapametersCss + "' шрифта заголовку 'Видалення акаунта' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
         }
 
         String[] namePapametersCssDes = new String[]{"color", "font-size", "font-family", "margin"};
@@ -551,7 +546,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitle = propertiesPapameterCssTitle[i];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitle, $(titleLocatorCss.getTitleAppPasswords()).getCssValue(varNamePapametersCss),
-                    "\"" + varNamePapametersCss + " шрифта заголовку 'Паролі для зовнішніх програм' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
+                    "'" + varNamePapametersCss + "' шрифта заголовку 'Паролі для зовнішніх програм' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitle + "'.");
         }
 
         String[] namePapametersCssDes = new String[]{"color", "font-size", "font-family", "margin"};
@@ -564,7 +559,7 @@ public class TestDefaultTitleSecuritePage extends BaseTests {
             String varPropertiesPapametersCssTitleDes = propertiesPapameterCssTitleDes[j];
 
             softAssertion.assertEquals(varPropertiesPapametersCssTitleDes, $(descriptionLocatorCss.getDescriptionAppPasswords()).getCssValue(varNamePapametersCssDes),
-                    "\"" + varNamePapametersCssDes + " шрифта опису розділа 'Паролі для зовнішніх програм' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
+                    "'" + varNamePapametersCssDes + "' шрифта опису розділа 'Паролі для зовнішніх програм' для даної локалізації не відповідає документації'" + varPropertiesPapametersCssTitleDes + "'.");
         }
 
         softAssertion.assertAll();

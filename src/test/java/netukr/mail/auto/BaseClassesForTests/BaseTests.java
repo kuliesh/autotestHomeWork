@@ -1,5 +1,6 @@
 package netukr.mail.auto.BaseClassesForTests;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
 import netukr.mail.auto.helpers.ReaderFilesFromResources;
@@ -52,10 +53,10 @@ public class BaseTests {
 
     private void turnToLanguage(String language) throws InterruptedException {
         open("https://mail.ukr.net/desktop#settings/interface");
-        Thread.sleep(4000);
-        $("[lang] > .select__value").click();
+        //
+        $("[lang] > .select__value").shouldBe(Condition.enabled).click();
         String locatorWithLanguage = ".dropdown__list .link2:nth-of-type("+language+")";
-        $(locatorWithLanguage).click();
+        $(locatorWithLanguage).waitUntil(Condition.visible, 4000).click();
         $(".accept").click();
         refresh();
     }
